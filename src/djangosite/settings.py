@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os, dotenv
-from os import getenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +19,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: dont delete .env and put in secrets directly in production!
 project_folder = os.path.expanduser(BASE_DIR)
 dotenv.load_dotenv(os.path.join(project_folder, '.env'))
-
+def getdotenv(secret):
+    return os.getenv(secret)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv('KEY')
+SECRET_KEY = getdotenv('KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,7 +34,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    getenv("IP")
+    getdotenv("IP")
 ]
 
 
@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'djangosite',
         'CLIENT': {
-           'host': getenv('MONGO'),
+           'host': getdotenv('MONGO'),
         }
     },
     
